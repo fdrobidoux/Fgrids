@@ -1,25 +1,27 @@
 ﻿using System;
 using System.Collections;
-using System.Dynamic;
 
 namespace FGraph.Common
 {
-    public class Edge
+    [System.Diagnostics.DebuggerDisplay("{FirstNode} -> {SecondNode}")]
+    public class Link
     {
-        public Node FirstNode { get => Nodes[0]; set => Nodes[0] = value; }
-        public Node SecondNode { get => Nodes[1]; set => Nodes[1] = value; }
+        internal Graph _graph;
+
+        public Node FirstNode { get => Nodes[0]; internal set => Nodes[0] = value; }
+        public Node SecondNode { get => Nodes[1]; internal set => Nodes[1] = value; }
 
         public Node[] Nodes { get; protected set; } = new Node[2];
 
-        public Edge() { }
+        public Link() { }
 
-        public Edge(Node first, Node second)
+        public Link(Node first, Node second)
         {
             FirstNode = first;
             SecondNode = second;
         }
 
-        public Edge Fill(Node node)
+        public Link Fill(Node node)
         {
             if (FirstNode == null)
                 FirstNode = node;
@@ -29,7 +31,18 @@ namespace FGraph.Common
                 throw new MethodAccessException("Can't fill up nodes for an edge if it is full.");
             return this;
         }
-        
 
+        public Node OppositeNodeOf(Node node)
+        {
+            if (FirstNode == node)
+            {
+                return SecondNode;
+            }
+            else if (SecondNode == node)
+            {
+                return FirstNode;
+            }
+            return null;
+        }
     }
 }

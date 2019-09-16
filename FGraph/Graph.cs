@@ -8,19 +8,26 @@ namespace FGraph
     {
         protected List<Node> Nodes { get; set; } = new List<Node>();
 
-        protected List<Edge> Edges { get; set; } = new List<Edge>();
+        protected List<Link> Edges { get; set; } = new List<Link>();
 
         public IReadOnlyList<Node> AllNodes => Nodes;
-        public IReadOnlyList<Edge> AllEdges => Edges;
+        public IReadOnlyList<Link> AllLinks => Edges;
 
         public Graph()
         {
             
         }
 
-        public void InitializeWith(Node node)
+        public Node AddNode(Node node)
         {
             Nodes.Add(node);
+            node._graph = this;
+            return node;
+        }
+
+        public void Link(Node node1, Node node2)
+        {
+            
         }
     }
 }
