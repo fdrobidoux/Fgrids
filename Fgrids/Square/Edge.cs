@@ -11,8 +11,8 @@ namespace Fgrids.Square
 
         public Vector2 CoordonneeSource => throw new NotImplementedException();
 
-        public int X { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public int Y { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public int X { get; set; }
+        public int Y { get; set; }
 
         public IGridElement[] Neighbors => throw new NotImplementedException();
 

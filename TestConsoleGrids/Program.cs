@@ -164,10 +164,7 @@ namespace TestConsoleGrids
 
         private List<Tuple<T, double>> elements = new List<Tuple<T, double>>();
 
-        public int Count
-        {
-            get { return elements.Count; }
-        }
+        public int Count => elements.Count;
 
         public void Enqueue(T item, double priority)
         {
@@ -185,7 +182,7 @@ namespace TestConsoleGrids
                     bestIndex = i;
                 }
             }
-
+            
             T bestItem = elements[bestIndex].Item1;
             elements.RemoveAt(bestIndex);
             return bestItem;
@@ -203,10 +200,8 @@ namespace TestConsoleGrids
 
     public class AStarSearch
     {
-        public Dictionary<Location, Location> cameFrom
-            = new Dictionary<Location, Location>();
-        public Dictionary<Location, double> costSoFar
-            = new Dictionary<Location, double>();
+        public Dictionary<Location, Location> cameFrom = new Dictionary<Location, Location>();
+        public Dictionary<Location, double> costSoFar = new Dictionary<Location, double>();
 
         // Note: a generic version of A* would abstract over Location and
         // also Heuristic
