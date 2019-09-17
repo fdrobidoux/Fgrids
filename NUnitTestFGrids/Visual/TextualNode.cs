@@ -11,7 +11,7 @@ namespace NUnitTestFGraph.Visual
     {
         public string Text { get; set; }
 
-        public TextNode(string text)
+        public TextNode(VisualGraph graph, string text) : base(graph)
         {
             Text = text;
         }

@@ -4,18 +4,25 @@ using System.Collections;
 namespace FGraph.Common
 {
     [System.Diagnostics.DebuggerDisplay("{FirstNode} -> {SecondNode}")]
-    public class Link
+    public class Link : BaseGraphMember
     {
-        internal Graph _graph;
 
         public Node FirstNode { get => Nodes[0]; internal set => Nodes[0] = value; }
         public Node SecondNode { get => Nodes[1]; internal set => Nodes[1] = value; }
 
         public Node[] Nodes { get; protected set; } = new Node[2];
 
-        public Link() { }
+        public Link(Graph graph) : base(graph)
+        {
+            _graph.AddLink(this);
+        }
 
-        public Link(Node first, Node second)
+        public Link(Graph graph, Node singleNode) : this(graph)
+        {
+            FirstNode = singleNode;
+        }
+
+        public Link(Graph graph, Node first, Node second) : this(graph, first)
         {
             FirstNode = first;
             SecondNode = second;
@@ -28,7 +35,7 @@ namespace FGraph.Common
             else if (SecondNode == null)
                 SecondNode = node;
             else
-                throw new MethodAccessException("Can't fill up nodes for an edge if it is full.");
+                throw new IndexOutOfRangeException("Can't fill up nodes for an edge if it is full.");
             return this;
         }
 

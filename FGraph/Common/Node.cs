@@ -6,20 +6,17 @@ using System.Linq;
 namespace FGraph.Common
 {
     [System.Diagnostics.DebuggerDisplay("Node ({GetHashCode()})")]
-    public abstract class Node
+    public abstract class Node : BaseGraphMember
     {
-        internal Graph _graph;
-
         protected List<Link> Links { get; set; } = new List<Link>();
-
-        public ExpandoObject Data { get; protected set; } = new ExpandoObject();
 
         public IReadOnlyList<Link> AllLinks => Links;
 
-        public Node()
+        public Node(Graph graph) : base(graph)
         {
-            // TODO: Add init stuff.
+            _graph.AddNode(this);
         }
+
         public IEnumerable<Node> GetNeighbors()
         {
             foreach (var link in Links)
@@ -34,9 +31,33 @@ namespace FGraph.Common
                     if (link.FirstNode != null)
                         yield return link.FirstNode;
                 }
-                else yield return null;
             }
             yield break;
+        }
+
+        public List<Node> GetNeighborsSync()
+        {
+            List<Node> neighbors = new List<Node>();
+
+            foreach (var link in Links)
+            {
+                if (link.FirstNode == this)
+                {
+                    if (link.SecondNode != null)
+                    {
+                        neighbors.Add(link.SecondNode);
+                    }
+                }
+                else if (link.SecondNode == this)
+                {
+                    if (link.FirstNode != null)
+                    {
+                        neighbors.Add(link.FirstNode);
+                    }
+                }
+            }
+
+            return neighbors;
         }
 
         internal Node AssignTo(Link link)
@@ -60,22 +81,36 @@ namespace FGraph.Common
 
         internal Link CreateLink()
         {
-            Link anEdge = new Link();
-            this.AssignTo(anEdge);
-            return anEdge;
+            Link nouvLink = new Link(_graph);
+            this.AssignTo(nouvLink);
+            return nouvLink;
         }
 
         public IEnumerable<Link> GetNeighborlessLinks()
         {
             foreach (var link in Links)
             {
-                var opposite = link.OppositeNodeOf(this);
-                if (opposite == null)
+                if (link.OppositeNodeOf(this) == null)
                 {
                     yield return link;
                 }
             }
             yield break;
+        }
+
+        public List<Link> GetNeighborlessLinksSync()
+        {
+            List<Link> linkList = new List<Link>();
+
+            foreach (var link in Links)
+            {
+                if (link.OppositeNodeOf(this) == null)
+                {
+                    linkList.Add(link);
+                }
+            }
+
+            return linkList;
         }
     }
 }

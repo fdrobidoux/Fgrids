@@ -5,40 +5,47 @@ using System.Linq;
 using NUnitTestFGraph.Visual;
 using System.Collections.Generic;
 
-namespace Tests
+namespace NUnitTestFGraph
 {
-    public class Tests
+    public class UnitTest1
     {
-        Graph graph;
+        VisualGraph graph;
+        TextNode A;
+        TextNode B;
+        TextNode C;
 
         [SetUp]
         public void Setup()
         {
-            graph = new Graph();
+            graph = new VisualGraph();
 
-            graph.AddNode(new TextNode("A"))
-                .AssignTo(new TextNode("B"))
-                .AssignTo(new TextNode("C")
+            graph.AddNode(new TextNode(graph, "A"))
+                .AssignTo(new TextNode(graph, "B"))
+                .AssignTo(new TextNode(graph, "C")
                     .CreateLink().FirstNode)
-                .AssignTo(new TextNode("D")
-                    .AssignTo(new TextNode("E")));
+                .AssignTo(new TextNode(graph, "D")
+                    .AssignTo(new TextNode(graph, "E")));
 
         }
 
+        //[Test]
+        //[Order(0)]
+        //public void Nodes_Are_At_The_Right_Place()
+        //{
+        //    A = graph.AllNodes.OfType<TextNode>().First();
+        //    Assert.AreEqual("A", A.Text, "First one is A.");
+
+        //    B = A.GetNeighbors().OfType<TextNode>().First();
+        //    Assert.AreEqual("B", B.Text, "A is linked with B.");
+        //    Assert.IsNotEmpty(A.AllLinks, "A has one link created.");
+        //    Assert.IsEmpty(A.GetNeighborlessLinksSync(), "No neighborless links for A");
+
+        //    C = B.GetNeighborsSync().OfType<TextNode>().First(x => x.Text == "C");
+        //    Assert.IsNotNull(C, "C exists as a neighbor of B.");
+        //}
+
         [Test]
-        public void Test_NodesAreAtTheRightPlace()
-        {
-            Node A = graph.AllNodes.First();
-            Assert.AreEqual("A", (A as TextNode).Text, "First one is A.");
-
-            Node B = A.GetNeighbors().ToList()[0];
-            Assert.AreEqual("B", (B as TextNode).Text, "A is linked with B.");
-
-            Assert.IsNotEmpty(A.AllLinks, "A has one link created.");
-            Assert.IsEmpty(A.GetNeighborlessLinks(), "No neighborless links for A");
-        }
-
-        [Test]
+        [Order(1)]
         public void Test_Instances_Of_Graph_Are_Assigned_To_Everything()
         {
             foreach (TextNode node in graph.AllNodes)
