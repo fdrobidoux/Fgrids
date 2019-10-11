@@ -6,25 +6,23 @@ namespace FGraph.Common
     [System.Diagnostics.DebuggerDisplay("{FirstNode} -> {SecondNode}")]
     public class Link : BaseGraphMember
     {
-
         public Node FirstNode { get => Nodes[0]; internal set => Nodes[0] = value; }
         public Node SecondNode { get => Nodes[1]; internal set => Nodes[1] = value; }
 
         public Node[] Nodes { get; protected set; } = new Node[2];
 
-        public Link(Graph graph) : base(graph)
+        public Link() : base()
         {
-            _graph.AddLink(this);
+
         }
 
-        public Link(Graph graph, Node singleNode) : this(graph)
+        public Link(Node singleNode) : this()
         {
             FirstNode = singleNode;
         }
 
-        public Link(Graph graph, Node first, Node second) : this(graph, first)
+        public Link(Node first, Node second) : this(first)
         {
-            FirstNode = first;
             SecondNode = second;
         }
 

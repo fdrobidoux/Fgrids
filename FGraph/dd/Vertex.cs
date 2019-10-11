@@ -14,9 +14,6 @@ namespace FGraph.v2
         {
             Value = value;
             Neighbors = neighbors?.ToList() ?? new List<Vertex<T>>();
-            IsVisited = false;  // can be omitted, default is false but some
-                                // people like to have everything explicitly
-                                // initialized
         }
 
         public T Value { get; }   // can be made writable

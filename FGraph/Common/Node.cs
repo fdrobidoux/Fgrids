@@ -6,15 +6,14 @@ using System.Linq;
 namespace FGraph.Common
 {
     [System.Diagnostics.DebuggerDisplay("Node ({GetHashCode()})")]
-    public abstract class Node : BaseGraphMember
+    public class Node : BaseGraphMember
     {
         protected List<Link> Links { get; set; } = new List<Link>();
-
         public IReadOnlyList<Link> AllLinks => Links;
 
-        public Node(Graph graph) : base(graph)
+        public Node() : base()
         {
-            _graph.AddNode(this);
+
         }
 
         public IEnumerable<Node> GetNeighbors()
@@ -60,10 +59,18 @@ namespace FGraph.Common
             return neighbors;
         }
 
-        internal Node AssignTo(Link link)
+        public Node AssignTo(Link link)
         {
-            Links.Add(link);
-            link.Fill(this);
+            try
+            {
+                Links.Add(link);
+                link.Fill(this);
+            }
+            catch(Exception e)
+            {
+                Links.Remove(link);
+                throw;
+            }
 
             return this;
         }
@@ -81,7 +88,9 @@ namespace FGraph.Common
 
         internal Link CreateLink()
         {
-            Link nouvLink = new Link(_graph);
+            Link nouvLink = new Link();
+            nouvLink._graph = _graph;
+            _graph.AddLink(nouvLink);
             this.AssignTo(nouvLink);
             return nouvLink;
         }

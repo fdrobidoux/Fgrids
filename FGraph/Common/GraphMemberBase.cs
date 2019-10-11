@@ -7,9 +7,9 @@ namespace FGraph.Common
     public abstract class BaseGraphMember : IDisposable
     {
         internal Graph _graph;
-        protected BaseGraphMember(Graph graph)
+        protected BaseGraphMember()
         {
-            _graph = graph;
+            
         }
 
         #region IDisposable Support

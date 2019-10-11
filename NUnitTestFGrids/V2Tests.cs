@@ -1,60 +1,97 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using NUnit.Framework;
 using FGraph.v2;
 using FGraph;
 
 namespace NUnitTestFGraph
 {
+    /*
     public class V2Tests
     {
+        Vertex<string> vertLA;
+        Vertex<string> vertSF;
+        Vertex<string> vertLV;
+        Vertex<string> vertSE;
+        Vertex<string> vertAU;
+        Vertex<string> vertPO;
+        Vertex<string> vertNY;
 
+        UndirectedGenericGraph<string> testGraph;
 
         [SetUp]
         public void SetUp()
         {
+            vertLA = new Vertex<string>("Los Angeles");
+            vertSF = new Vertex<string>("San Francisco");
+            vertLV = new Vertex<string>("Las Vegas");
+            vertSE = new Vertex<string>("Seattle");
+            vertAU = new Vertex<string>("Austin");
+            vertPO = new Vertex<string>("Portland");
+            vertNY = new Vertex<string>("New York");
 
+            testGraph = new UndirectedGenericGraph<string>();
+
+            // la <=> sf, lv, po
+            testGraph.AddPair(vertLA, vertSF);
+            testGraph.AddPair(vertLA, vertLV);
+            testGraph.AddPair(vertLA, vertPO);
+
+            // sf <=> se, po
+            testGraph.AddPair(vertSF, vertSE);
+            testGraph.AddPair(vertSF, vertPO);
+            testGraph.AddPair(vertSF, vertNY);
+
+            // lv <=> au
+            testGraph.AddPair(vertLV, vertAU);
+
+            // se <=> po
+            testGraph.AddPair(vertSE, vertPO);
         }
 
         [Test][Order(0)]
         public void CheckVertices()
         {
-            var la = new Vertex<string>("Los Angeles");
-            var sf = new Vertex<string>("San Francisco");
-            var lv = new Vertex<string>("Las Vegas");
-            var se = new Vertex<string>("Seattle");
-            var au = new Vertex<string>("Austin");
-            var po = new Vertex<string>("Portland");
+            Assert.IsNotEmpty(testGraph.Vertices);
 
-            var testGraph = new UndirectedGenericGraph<string>();
+            // Los Angeles
+            Assert.Contains(vertLA, testGraph.Vertices);
+            Assert.Contains(vertSF, vertLA.Neighbors);
+            Assert.Contains(vertLV, vertLA.Neighbors);
+            Assert.Contains(vertPO, vertLA.Neighbors);
 
-            // la <=> sf, lv, po
-            testGraph.AddPair(la, sf);
-            testGraph.AddPair(la, lv);
-            testGraph.AddPair(la, po);
+            // San Francisco
+            Assert.Contains(vertSF, testGraph.Vertices);
+            Assert.Contains(vertSE, vertSF.Neighbors);
+            Assert.Contains(vertPO, vertSF.Neighbors);
+            Assert.Contains(vertLA, vertSF.Neighbors);
 
-            // sf <=> se, po
-            testGraph.AddPair(sf, se);
-            testGraph.AddPair(sf, po);
+            // Las Vegas
+            Assert.Contains(vertLV, testGraph.Vertices);
+            Assert.Contains(vertAU, vertLV.Neighbors);
+            Assert.Contains(vertLA, vertLV.Neighbors);
 
-            // lv <=> au
-            testGraph.AddPair(lv, au);
+            // Seattle
+            Assert.Contains(vertSE, testGraph.Vertices);
+            Assert.Contains(vertPO, vertSE.Neighbors);
+            Assert.Contains(vertSF, vertSE.Neighbors);
 
-            // se <=> po
-            testGraph.AddPair(se, po);
+            // Austin
+            Assert.Contains(vertAU, testGraph.Vertices);
+            Assert.Contains(vertLV, vertAU.Neighbors);
 
-            // Check to see that all neighbors are properly set up
-            foreach (var vertex in testGraph.Vertices)
-            {
-                System.Diagnostics.Debug.WriteLine(vertex.ToString());
-            }
+            // Portland
+            Assert.Contains(vertPO, testGraph.Vertices);
+            Assert.Contains(vertSF, vertPO.Neighbors);
+            Assert.Contains(vertSE, vertPO.Neighbors);
+            Assert.Contains(vertLA, vertPO.Neighbors);
 
             // Test searching algorithms
-            testGraph.DepthFirstSearch(la, (m) => System.Diagnostics.Debug.WriteLine(m));
+            testGraph.DepthFirstSearch(vertLA, (m) => System.Diagnostics.Debug.WriteLine(m));
 
             return;
         }
-
     }
+    */
 }

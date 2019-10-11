@@ -19,30 +19,32 @@ namespace NUnitTestFGraph
         {
             graph = new VisualGraph();
 
-            graph.AddNode(new TextNode(graph, "A"))
-                .AssignTo(new TextNode(graph, "B"))
-                .AssignTo(new TextNode(graph, "C")
-                    .CreateLink().FirstNode)
+            graph.AddNode(A = new TextNode(graph, "A"));
+
+            A.AssignTo(B = new TextNode(graph, "B"))
+                .AssignTo(C = new TextNode(graph, "C"))
                 .AssignTo(new TextNode(graph, "D")
                     .AssignTo(new TextNode(graph, "E")));
 
+            C.CreateLink();
+
         }
 
-        //[Test]
-        //[Order(0)]
-        //public void Nodes_Are_At_The_Right_Place()
-        //{
-        //    A = graph.AllNodes.OfType<TextNode>().First();
-        //    Assert.AreEqual("A", A.Text, "First one is A.");
+        [Test]
+        [Order(0)]
+        public void Nodes_Are_At_The_Right_Place()
+        {
+            A = graph.AllNodes.OfType<TextNode>().First();
+            Assert.AreEqual("A", A.Text, "First one is A.");
 
-        //    B = A.GetNeighbors().OfType<TextNode>().First();
-        //    Assert.AreEqual("B", B.Text, "A is linked with B.");
-        //    Assert.IsNotEmpty(A.AllLinks, "A has one link created.");
-        //    Assert.IsEmpty(A.GetNeighborlessLinksSync(), "No neighborless links for A");
+            B = A.GetNeighbors().OfType<TextNode>().First();
+            Assert.AreEqual("B", B.Text, "A is linked with B.");
+            Assert.IsNotEmpty(A.AllLinks, "A has one link created.");
+            Assert.IsEmpty(A.GetNeighborlessLinksSync(), "No neighborless links for A");
 
-        //    C = B.GetNeighborsSync().OfType<TextNode>().First(x => x.Text == "C");
-        //    Assert.IsNotNull(C, "C exists as a neighbor of B.");
-        //}
+            C = B.GetNeighborsSync().OfType<TextNode>().First(x => x.Text == "C");
+            Assert.IsNotNull(C, "C exists as a neighbor of B.");
+        }
 
         [Test]
         [Order(1)]
